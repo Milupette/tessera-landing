@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Mosaico TESSERA</title>
+  <desc id="desc">Peças soltas se organizando em um caminho visual, com presença humana sugerida.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#121719"/>
+      <stop offset="0.45" stop-color="#26312f"/>
+      <stop offset="1" stop-color="#efe5d2"/>
+    </linearGradient>
+    <linearGradient id="warm" x1="0" x2="1">
+      <stop offset="0" stop-color="#b96345"/>
+      <stop offset="1" stop-color="#d6c2aa"/>
+    </linearGradient>
+    <linearGradient id="jade" x1="0" x2="1">
+      <stop offset="0" stop-color="#254d45"/>
+      <stop offset="1" stop-color="#5e9889"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#111417" flood-opacity=".28"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <path d="M0 672C236 558 378 604 557 516c219-107 341-335 642-307 183 17 310 113 401 214v477H0Z" fill="#f6f1e7" opacity=".92"/>
+  <path d="M448 748c178-158 309-219 460-249 167-33 326 13 528-91" fill="none" stroke="#b99a5b" stroke-width="22" stroke-linecap="round" opacity=".46"/>
+  <g filter="url(#shadow)">
+    <g transform="translate(520 330) rotate(-11)">
+      <rect x="0" y="0" width="124" height="86" rx="8" fill="#fffdf7"/>
+      <rect x="18" y="18" width="74" height="8" rx="4" fill="#3f7568" opacity=".42"/>
+      <rect x="18" y="40" width="88" height="7" rx="4" fill="#b99a5b" opacity=".32"/>
+    </g>
+    <g transform="translate(682 462) rotate(8)">
+      <rect x="0" y="0" width="124" height="86" rx="8" fill="#fffdf7"/>
+      <rect x="18" y="18" width="66" height="8" rx="4" fill="#b96345" opacity=".42"/>
+      <rect x="18" y="40" width="90" height="7" rx="4" fill="#254d45" opacity=".28"/>
+    </g>
+  </g>
+  <g opacity=".96" filter="url(#shadow)">
+    <rect x="836" y="262" width="72" height="58" rx="9" fill="#b99a5b" transform="rotate(8 872 291)"/>
+    <rect x="927" y="288" width="70" height="70" rx="10" fill="#3f7568" transform="rotate(-10 962 323)"/>
+    <rect x="1014" y="334" width="88" height="58" rx="10" fill="#b96345" transform="rotate(13 1058 363)"/>
+    <rect x="1118" y="342" width="82" height="82" rx="12" fill="#fffdf7" transform="rotate(-6 1159 383)"/>
+    <rect x="1212" y="395" width="76" height="66" rx="10" fill="#d6c2aa" transform="rotate(11 1250 428)"/>
+    <rect x="1305" y="418" width="86" height="72" rx="11" fill="#254d45" transform="rotate(-7 1348 454)"/>
+    <rect x="1398" y="478" width="76" height="66" rx="10" fill="#b99a5b" transform="rotate(6 1436 511)"/>
+  </g>
+  <g opacity=".74">
+    <rect x="206" y="612" width="48" height="40" rx="7" fill="#b96345" transform="rotate(-18 230 632)"/>
+    <rect x="308" y="560" width="42" height="38" rx="6" fill="#d6c2aa" transform="rotate(22 329 579)"/>
+    <rect x="403" y="650" width="50" height="42" rx="7" fill="#3f7568" transform="rotate(-7 428 671)"/>
+    <rect x="276" y="718" width="36" height="34" rx="6" fill="#b99a5b" transform="rotate(14 294 735)"/>
+    <rect x="452" y="548" width="38" height="34" rx="6" fill="#fffdf7" transform="rotate(-11 471 565)"/>
+  </g>
+  <g transform="translate(1194 184)" opacity=".9">
+    <path d="M93 78c36 23 56 54 49 84-9 39-60 58-113 42-20-6-38-16-51-29 43 4 76-4 96-26 19-21 25-46 19-71Z" fill="#8a5d4b"/>
+    <path d="M54 112c39 15 83 6 118-23" fill="none" stroke="#5d3f35" stroke-width="18" stroke-linecap="round"/>
+  </g>
+  <circle cx="1270" cy="272" r="125" fill="#fffdf7" opacity=".12"/>
+  <circle cx="1360" cy="334" r="84" fill="#b99a5b" opacity=".14"/>
+</svg>
