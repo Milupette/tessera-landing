@@ -1,0 +1,569 @@
+:root {
+  --ink: #111417;
+  --ink-soft: #30363b;
+  --paper: #f6f1e7;
+  --paper-soft: #fffaf0;
+  --ivory: #fffdf7;
+  --jade: #3f7568;
+  --jade-dark: #254d45;
+  --terracotta: #b96345;
+  --brass: #b99a5b;
+  --clay: #d6c2aa;
+  --line: rgba(17, 20, 23, 0.14);
+  --shadow: 0 24px 80px rgba(17, 20, 23, 0.18);
+  --max: 1160px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px clamp(18px, 4vw, 56px);
+  color: var(--ivory);
+  transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.site-header.is-scrolled {
+  color: var(--ink);
+  background: rgba(246, 241, 231, 0.9);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(16px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.brand-mark {
+  width: 20px;
+  height: 20px;
+  display: inline-grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3px;
+}
+
+.brand-mark::before,
+.brand-mark::after {
+  content: "";
+}
+
+.brand-mark,
+.brand-mark::before,
+.brand-mark::after {
+  background:
+    linear-gradient(var(--brass), var(--brass)) 0 0 / 8px 8px no-repeat,
+    linear-gradient(var(--terracotta), var(--terracotta)) 12px 0 / 8px 8px no-repeat,
+    linear-gradient(var(--jade), var(--jade)) 0 12px / 8px 8px no-repeat,
+    linear-gradient(currentColor, currentColor) 12px 12px / 8px 8px no-repeat;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2vw, 28px);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.nav-links a {
+  opacity: 0.82;
+}
+
+.nav-links a:hover {
+  opacity: 1;
+}
+
+.hero {
+  min-height: 92vh;
+  position: relative;
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  background: #111417;
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  background: url("assets/tessera-hero-mosaic.svg") center right / cover no-repeat;
+  transform: scale(1.02);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(10, 12, 14, 0.9) 0%, rgba(10, 12, 14, 0.78) 36%, rgba(10, 12, 14, 0.2) 72%),
+    linear-gradient(0deg, rgba(10, 12, 14, 0.45), rgba(10, 12, 14, 0.05));
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  width: min(720px, calc(100% - 36px));
+  margin-left: clamp(18px, 7vw, 92px);
+  padding-top: 80px;
+  color: var(--ivory);
+}
+
+.eyebrow,
+.section-kicker {
+  margin: 0 0 18px;
+  color: var(--brass);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+h1,
+h2 {
+  margin: 0;
+  font-family: Newsreader, Georgia, serif;
+  font-weight: 600;
+  line-height: 1.02;
+}
+
+h1 {
+  max-width: 700px;
+  font-size: clamp(3.2rem, 7vw, 6.8rem);
+}
+
+h2 {
+  font-size: clamp(2.2rem, 4.6vw, 4.5rem);
+}
+
+h3 {
+  margin: 0;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  line-height: 1.25;
+}
+
+p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 1.03rem;
+}
+
+.hero-copy {
+  max-width: 620px;
+  margin-top: 24px;
+  color: rgba(255, 253, 247, 0.82);
+  font-size: clamp(1.08rem, 2vw, 1.35rem);
+}
+
+.hero-actions,
+.final-inner .button {
+  margin-top: 34px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.button {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 13px 22px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.button-primary {
+  background: var(--ivory);
+  color: var(--ink);
+}
+
+.button-secondary {
+  border: 1px solid rgba(255, 253, 247, 0.36);
+  color: var(--ivory);
+}
+
+.quote-band {
+  padding: clamp(34px, 5vw, 68px) clamp(18px, 4vw, 56px);
+  background: var(--ink);
+}
+
+.quote-band p {
+  max-width: 980px;
+  margin: 0 auto;
+  color: var(--ivory);
+  font-family: Newsreader, Georgia, serif;
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
+  line-height: 1.12;
+  text-align: center;
+}
+
+.section {
+  width: min(var(--max), calc(100% - 36px));
+  margin: 0 auto;
+  padding: clamp(70px, 10vw, 126px) 0;
+}
+
+.split,
+.turn-grid,
+.product-layout,
+.fit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 76px);
+  align-items: start;
+}
+
+.split p + p,
+.feature-copy p + p {
+  margin-top: 18px;
+}
+
+.wide-copy {
+  max-width: 860px;
+  margin-top: 36px;
+  font-size: 1.18rem;
+}
+
+.piece-list,
+.ecosystem-map {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.piece-list span,
+.ecosystem-map span {
+  border: 1px solid var(--line);
+  background: rgba(255, 253, 247, 0.58);
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  box-shadow: 0 10px 30px rgba(17, 20, 23, 0.06);
+}
+
+.turn {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.mosaic-panel {
+  min-height: 420px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  padding: 18px;
+  background: var(--ink);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.mosaic-panel span {
+  min-height: 70px;
+  border-radius: 6px;
+  background: var(--clay);
+}
+
+.mosaic-panel span:nth-child(3n) {
+  background: var(--jade);
+}
+
+.mosaic-panel span:nth-child(4n) {
+  background: var(--terracotta);
+}
+
+.mosaic-panel span:nth-child(5n) {
+  background: var(--brass);
+}
+
+.mosaic-panel span:nth-child(7n) {
+  background: var(--paper-soft);
+}
+
+.section-heading {
+  max-width: 860px;
+  margin-bottom: clamp(32px, 5vw, 60px);
+}
+
+.section-heading p {
+  margin-top: 18px;
+  font-size: 1.18rem;
+}
+
+.board-visual {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding: 16px;
+  border-radius: 8px;
+  background: #26312f;
+  box-shadow: var(--shadow);
+}
+
+.board-column {
+  min-height: 230px;
+  padding: 14px;
+  border-radius: 7px;
+  background: rgba(255, 253, 247, 0.92);
+}
+
+.board-column strong {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--jade-dark);
+  font-size: 0.86rem;
+}
+
+.board-column span {
+  display: block;
+  height: 48px;
+  margin-top: 10px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, rgba(63, 117, 104, 0.18), rgba(185, 154, 91, 0.18));
+  border: 1px solid rgba(17, 20, 23, 0.08);
+}
+
+.feature-copy {
+  align-self: center;
+}
+
+.feature-copy p {
+  margin-top: 18px;
+}
+
+.benefit-list,
+.fit-column ul {
+  margin: 24px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.benefit-list li,
+.fit-column li {
+  position: relative;
+  padding: 12px 0 12px 28px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+}
+
+.benefit-list li::before,
+.fit-column li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 20px;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--jade);
+  transform: rotate(12deg);
+}
+
+.service {
+  width: 100%;
+  max-width: none;
+  padding-inline: max(18px, calc((100vw - var(--max)) / 2));
+  background: var(--paper-soft);
+  border-block: 1px solid var(--line);
+}
+
+.commitment-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 54px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.commitment-row div {
+  min-height: 180px;
+  padding: 26px;
+  background: var(--paper-soft);
+}
+
+.commitment-row strong,
+.commitment-row span {
+  display: block;
+}
+
+.commitment-row strong {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.commitment-row span {
+  color: var(--ink-soft);
+}
+
+.ecosystem-map {
+  max-width: 900px;
+}
+
+.fit {
+  width: min(var(--max), calc(100% - 36px));
+}
+
+.fit-column {
+  min-height: 100%;
+  padding: clamp(24px, 4vw, 42px);
+  border: 1px solid var(--line);
+  background: rgba(255, 253, 247, 0.5);
+  border-radius: 8px;
+}
+
+.not-fit {
+  background: rgba(17, 20, 23, 0.04);
+}
+
+.differences {
+  border-top: 1px solid var(--line);
+}
+
+.difference-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.difference-grid article {
+  min-height: 210px;
+  padding: 28px;
+  background: var(--paper);
+}
+
+.difference-grid p {
+  margin-top: 14px;
+}
+
+.final-cta {
+  padding: clamp(80px, 12vw, 150px) 18px;
+  background:
+    linear-gradient(rgba(17, 20, 23, 0.78), rgba(17, 20, 23, 0.82)),
+    url("assets/tessera-hero-mosaic.svg") center / cover no-repeat;
+  color: var(--ivory);
+}
+
+.final-inner {
+  width: min(820px, 100%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.final-inner p:not(.eyebrow) {
+  max-width: 680px;
+  margin: 22px auto 0;
+  color: rgba(255, 253, 247, 0.82);
+  font-size: 1.16rem;
+}
+
+@media (max-width: 860px) {
+  .site-header {
+    padding-block: 14px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .hero {
+    min-height: 88vh;
+  }
+
+  .hero-media {
+    background-position: center;
+  }
+
+  .hero-overlay {
+    background:
+      linear-gradient(90deg, rgba(10, 12, 14, 0.88), rgba(10, 12, 14, 0.56)),
+      linear-gradient(0deg, rgba(10, 12, 14, 0.54), rgba(10, 12, 14, 0.08));
+  }
+
+  .hero-content {
+    margin: 0 auto;
+  }
+
+  .split,
+  .turn-grid,
+  .product-layout,
+  .fit,
+  .commitment-row,
+  .difference-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mosaic-panel {
+    min-height: 300px;
+  }
+
+  .board-visual {
+    grid-template-columns: 1fr;
+  }
+
+  .board-column {
+    min-height: 170px;
+  }
+}
+
+@media (max-width: 540px) {
+  h1 {
+    font-size: 3rem;
+  }
+
+  h2 {
+    font-size: 2.15rem;
+  }
+
+  .button,
+  .hero-actions {
+    width: 100%;
+  }
+
+  .quote-band p {
+    text-align: left;
+  }
+
+  .mosaic-panel {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .mosaic-panel span {
+    min-height: 54px;
+  }
+}
