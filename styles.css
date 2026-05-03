@@ -121,7 +121,7 @@ a {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: url("assets/tessera-hero-mosaic.svg") center right / cover no-repeat;
+  background: url("assets/tessera-hero-mosaic.jpg") center right / cover no-repeat;
   image-rendering: auto;
 }
 
@@ -299,6 +299,18 @@ p {
 
 .button-secondary {
   border: 1px solid rgba(255, 253, 247, 0.36);
+  color: var(--ivory);
+}
+
+.button-quiet {
+  border: 1px solid rgba(255, 253, 247, 0.22);
+  background: rgba(17, 20, 23, 0.12);
+  color: rgba(255, 253, 247, 0.86);
+  cursor: pointer;
+}
+
+.button-quiet:hover {
+  border-color: rgba(255, 253, 247, 0.42);
   color: var(--ivory);
 }
 
@@ -638,6 +650,115 @@ p {
   font-size: 0.98rem;
 }
 
+.diagnosis-dialog {
+  width: min(680px, calc(100% - 28px));
+  max-height: min(760px, calc(100% - 28px));
+  overflow: auto;
+  padding: 0;
+  border: 1px solid rgba(255, 253, 247, 0.22);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  box-shadow: 0 34px 110px rgba(17, 20, 23, 0.34);
+}
+
+.diagnosis-dialog::backdrop {
+  background: rgba(10, 12, 14, 0.64);
+  backdrop-filter: blur(8px);
+}
+
+.diagnosis-panel {
+  position: relative;
+  padding: clamp(24px, 5vw, 44px);
+  background:
+    linear-gradient(135deg, rgba(63, 117, 104, 0.08) 0 16%, transparent 16% 100%),
+    linear-gradient(45deg, transparent 0 78%, rgba(185, 154, 91, 0.12) 78% 100%),
+    var(--paper-soft);
+}
+
+.diagnosis-panel h2 {
+  max-width: 560px;
+  color: var(--ink);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.diagnosis-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: rgba(255, 253, 247, 0.76);
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.diagnosis-step,
+.diagnosis-result {
+  margin-top: clamp(26px, 4vw, 38px);
+}
+
+.diagnosis-step {
+  display: none;
+}
+
+.diagnosis-step.is-active {
+  display: block;
+}
+
+.diagnosis-question {
+  max-width: 520px;
+  color: var(--ink);
+  font-family: Newsreader, Georgia, serif;
+  font-size: clamp(1.28rem, 3vw, 1.72rem);
+  line-height: 1.18;
+}
+
+.diagnosis-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.diagnosis-options button {
+  min-height: 54px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px 16px;
+  background: rgba(255, 253, 247, 0.66);
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+}
+
+.diagnosis-options button:hover,
+.diagnosis-options button:focus-visible {
+  border-color: rgba(63, 117, 104, 0.42);
+  background: rgba(255, 253, 247, 0.94);
+  outline: none;
+}
+
+.diagnosis-result-text {
+  margin-top: 16px;
+  color: var(--jade-dark);
+  font-family: Newsreader, Georgia, serif;
+  font-size: clamp(1.7rem, 4vw, 2.5rem);
+  line-height: 1.1;
+}
+
+.diagnosis-result .button {
+  margin-top: 28px;
+  background: var(--ink);
+  color: var(--ivory);
+}
+
 @media (max-width: 860px) {
   .site-header {
     padding-block: 14px;
@@ -670,6 +791,10 @@ p {
     right: 18px;
     bottom: 24px;
     max-width: 180px;
+  }
+
+  .diagnosis-options {
+    grid-template-columns: 1fr;
   }
 
   .hero-content {
@@ -715,6 +840,14 @@ p {
   .button,
   .hero-actions {
     width: 100%;
+  }
+
+  .hero-actions .button {
+    width: 100%;
+  }
+
+  .diagnosis-dialog {
+    width: calc(100% - 18px);
   }
 
   .board-visual {
