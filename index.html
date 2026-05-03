@@ -17,6 +17,7 @@
       content="Estrutura, direção e presença para organizar as peças soltas da vida e construir uma rotina com mais clareza."
     />
     <meta property="og:type" content="website" />
+    <!-- Na versão publicada, trocar og:image por uma URL absoluta, exemplo: https://seudominio.com/assets/tessera-hero-mosaic.jpg -->
     <meta property="og:image" content="assets/tessera-hero-mosaic.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -61,6 +62,9 @@
           <div class="hero-actions">
             <a class="button button-primary" href="#comecar">Começar minha construção</a>
             <a class="button button-secondary" href="#mosaico">Entender como funciona</a>
+            <button class="button button-quiet" type="button" data-diagnosis-open>
+              Descobrir meu ponto de partida
+            </button>
           </div>
         </div>
       </section>
@@ -205,15 +209,15 @@
             <p>
               Por isso, a TESSERA oferece acompanhamento individual e personalizado,
               com acesso direto, suporte contínuo, consultorias e orientação prática.
-              Quem entra não compra apenas acesso a um sistema; compra proximidade,
-              clareza e acompanhamento real.
+              Quem entra não recebe apenas acesso a um sistema. Entra em uma relação
+              de proximidade, clareza e acompanhamento real.
             </p>
           </div>
         </div>
         <div class="commitment-row">
           <div>
             <strong>Sem abandono</strong>
-            <span>Não há alunos esquecidos em uma comunidade silenciosa.</span>
+            <span>Quem entra não vira número. Vira responsabilidade.</span>
           </div>
           <div>
             <strong>Sem suporte superficial</strong>
@@ -237,15 +241,16 @@
           </p>
         </div>
         <div class="ecosystem-map">
-          <span>Trello</span>
+          <span>Direção</span>
           <span>Organização</span>
-          <span>Produtividade</span>
+          <span>Construção de vida</span>
           <span>Tecnologia</span>
-          <span>Carreira</span>
-          <span>Negócios</span>
-          <span>Nutrição</span>
           <span>Automações</span>
           <span>Inteligência artificial</span>
+          <span>Projetos</span>
+          <span>Clareza</span>
+          <span>Especialistas em formação</span>
+          <span>Soluções reais</span>
         </div>
         <p class="wide-copy">
           No futuro, esse ecossistema pode reunir especialistas de várias áreas. A
@@ -386,17 +391,65 @@
             vida perfeita. Ela oferece estrutura, direção e presença para construir
             com mais clareza.
           </p>
-          <!-- Substituir 55XXXXXXXXXXX pelo número oficial da TESSERA com DDD -->
-          <a class="button button-primary" href="https://wa.me/55XXXXXXXXXXX?text=Quero%20come%C3%A7ar%20minha%20constru%C3%A7%C3%A3o%20com%20a%20TESSERA">
+          <!-- Substituir 55XXXXXXXXXXX pelo número oficial da TESSERA com DDD antes da publicação -->
+          <a class="button button-primary" data-whatsapp-link href="https://wa.me/55XXXXXXXXXXX?text=Quero%20come%C3%A7ar%20minha%20constru%C3%A7%C3%A3o%20com%20a%20TESSERA">
             Começar minha construção
           </a>
           <p class="cta-support">
-            Uma conversa inicial para entender onde sua vida está espalhada — e por
-            onde sua construção deve começar.
+            Você será direcionado para uma conversa inicial para entendermos sua
+            rotina, suas peças soltas e o melhor ponto de partida.
           </p>
         </div>
       </section>
     </main>
+
+    <dialog class="diagnosis-dialog" data-diagnosis-dialog aria-labelledby="diagnosis-title">
+      <div class="diagnosis-panel">
+        <button class="diagnosis-close" type="button" data-diagnosis-close aria-label="Fechar diagnóstico">×</button>
+        <p class="section-kicker">Diagnóstico das Peças Soltas</p>
+        <h2 id="diagnosis-title">Descubra por onde sua construção pode começar.</h2>
+
+        <div class="diagnosis-step is-active" data-diagnosis-step="0">
+          <p class="diagnosis-question">Onde sua vida parece mais espalhada hoje?</p>
+          <div class="diagnosis-options">
+            <button type="button" data-diagnosis-answer data-result="centralizar as peças espalhadas">Tarefas e rotina</button>
+            <button type="button" data-diagnosis-answer data-result="transformar ideias em projetos visíveis">Projetos e ideias</button>
+            <button type="button" data-diagnosis-answer data-result="dar estrutura ao seu desenvolvimento">Estudos e desenvolvimento</button>
+            <button type="button" data-diagnosis-answer data-result="organizar responsabilidades com mais clareza">Finanças e responsabilidades</button>
+            <button type="button" data-diagnosis-answer data-result="clareza de próximos passos">Direção geral</button>
+          </div>
+        </div>
+
+        <div class="diagnosis-step" data-diagnosis-step="1">
+          <p class="diagnosis-question">O que mais trava seu avanço?</p>
+          <div class="diagnosis-options">
+            <button type="button" data-diagnosis-answer data-result="clareza de próximos passos">Falta de clareza</button>
+            <button type="button" data-diagnosis-answer data-result="centralizar as peças espalhadas">Excesso de coisas abertas</button>
+            <button type="button" data-diagnosis-answer data-result="ter acompanhamento para ajustar a rota">Falta de acompanhamento</button>
+            <button type="button" data-diagnosis-answer data-result="decidir o que vem primeiro">Dificuldade de priorizar</button>
+          </div>
+        </div>
+
+        <div class="diagnosis-step" data-diagnosis-step="2">
+          <p class="diagnosis-question">O que você mais precisa agora?</p>
+          <div class="diagnosis-options">
+            <button type="button" data-diagnosis-answer data-result="centralizar as peças espalhadas">Organizar</button>
+            <button type="button" data-diagnosis-answer data-result="clareza de próximos passos">Decidir</button>
+            <button type="button" data-diagnosis-answer data-result="transformar intenção em movimento concreto">Executar</button>
+            <button type="button" data-diagnosis-answer data-result="ter acompanhamento para ajustar a rota">Ser acompanhado</button>
+          </div>
+        </div>
+
+        <div class="diagnosis-result" data-diagnosis-result hidden>
+          <p class="diagnosis-question">Seu primeiro ponto de construção:</p>
+          <p class="diagnosis-result-text" data-diagnosis-result-text></p>
+          <!-- Usa o mesmo placeholder do CTA final. Substituir 55XXXXXXXXXXX pelo número oficial da TESSERA com DDD antes da publicação -->
+          <a class="button button-primary" data-diagnosis-whatsapp href="https://wa.me/55XXXXXXXXXXX?text=Quero%20come%C3%A7ar%20minha%20constru%C3%A7%C3%A3o%20com%20a%20TESSERA">
+            Começar minha construção
+          </a>
+        </div>
+      </div>
+    </dialog>
 
     <script src="script.js"></script>
   </body>
