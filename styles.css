@@ -25,7 +25,11 @@ html {
 body {
   margin: 0;
   color: var(--ink);
-  background: var(--paper);
+  background:
+    linear-gradient(90deg, rgba(185, 154, 91, 0.08) 1px, transparent 1px) 0 0 / 72px 72px,
+    linear-gradient(0deg, rgba(63, 117, 104, 0.07) 1px, transparent 1px) 0 0 / 72px 72px,
+    linear-gradient(135deg, transparent 0 72%, rgba(185, 154, 91, 0.09) 72% 72.5%, transparent 72.5% 100%),
+    var(--paper);
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.6;
 }
@@ -116,13 +120,48 @@ a {
 .hero-media {
   position: absolute;
   inset: 0;
-  background: url("assets/tessera-hero-mosaic.svg") center right / cover no-repeat;
+  z-index: 0;
+  background: url("assets/tessera-hero-mosaic.jpg") center right / cover no-repeat;
   transform: scale(1.02);
+}
+
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero::before {
+  inset: 0;
+  background:
+    linear-gradient(115deg, transparent 0 54%, rgba(255, 253, 247, 0.12) 54% 54.3%, transparent 54.3% 100%),
+    linear-gradient(42deg, transparent 0 68%, rgba(185, 154, 91, 0.16) 68% 68.35%, transparent 68.35% 100%);
+  mix-blend-mode: screen;
+  opacity: 0.62;
+}
+
+.hero::after {
+  right: clamp(18px, 5vw, 80px);
+  bottom: clamp(26px, 7vw, 96px);
+  width: min(360px, 36vw);
+  aspect-ratio: 1.35;
+  background:
+    linear-gradient(var(--brass), var(--brass)) 8% 22% / 14% 18% no-repeat,
+    linear-gradient(var(--jade), var(--jade)) 27% 6% / 18% 22% no-repeat,
+    linear-gradient(var(--terracotta), var(--terracotta)) 50% 26% / 15% 19% no-repeat,
+    linear-gradient(var(--paper-soft), var(--paper-soft)) 68% 12% / 20% 22% no-repeat,
+    linear-gradient(var(--clay), var(--clay)) 79% 43% / 16% 20% no-repeat;
+  opacity: 0.26;
+  transform: rotate(-7deg);
+  filter: blur(0.2px);
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
+  z-index: 1;
   background:
     linear-gradient(90deg, rgba(10, 12, 14, 0.9) 0%, rgba(10, 12, 14, 0.78) 36%, rgba(10, 12, 14, 0.2) 72%),
     linear-gradient(0deg, rgba(10, 12, 14, 0.45), rgba(10, 12, 14, 0.05));
@@ -130,7 +169,7 @@ a {
 
 .hero-content {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   width: min(720px, calc(100% - 36px));
   margin-left: clamp(18px, 7vw, 92px);
   padding-top: 80px;
@@ -158,6 +197,15 @@ h2 {
 h1 {
   max-width: 700px;
   font-size: clamp(3.2rem, 7vw, 6.8rem);
+}
+
+.hero-line {
+  max-width: 650px;
+  margin-top: 16px;
+  color: var(--ivory);
+  font-family: Newsreader, Georgia, serif;
+  font-size: clamp(1.7rem, 3vw, 2.7rem);
+  line-height: 1.08;
 }
 
 h2 {
@@ -231,9 +279,20 @@ p {
 }
 
 .section {
+  position: relative;
   width: min(var(--max), calc(100% - 36px));
   margin: 0 auto;
   padding: clamp(70px, 10vw, 126px) 0;
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  top: 34px;
+  right: 0;
+  width: min(220px, 24vw);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(185, 154, 91, 0.42), transparent);
 }
 
 .split,
@@ -324,7 +383,7 @@ p {
 
 .board-visual {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
   padding: 16px;
   border-radius: 8px;
@@ -333,7 +392,7 @@ p {
 }
 
 .board-column {
-  min-height: 230px;
+  min-height: 176px;
   padding: 14px;
   border-radius: 7px;
   background: rgba(255, 253, 247, 0.92);
@@ -348,11 +407,20 @@ p {
 
 .board-column span {
   display: block;
-  height: 48px;
+  height: 38px;
   margin-top: 10px;
   border-radius: 6px;
   background: linear-gradient(90deg, rgba(63, 117, 104, 0.18), rgba(185, 154, 91, 0.18));
   border: 1px solid rgba(17, 20, 23, 0.08);
+}
+
+.board-caption {
+  grid-column: 1 / -1;
+  padding: 4px 4px 0;
+  color: rgba(255, 253, 247, 0.78);
+  font-family: Newsreader, Georgia, serif;
+  font-size: 1.25rem;
+  line-height: 1.18;
 }
 
 .feature-copy {
@@ -395,7 +463,10 @@ p {
   width: 100%;
   max-width: none;
   padding-inline: max(18px, calc((100vw - var(--max)) / 2));
-  background: var(--paper-soft);
+  background:
+    linear-gradient(135deg, rgba(63, 117, 104, 0.08) 0 12%, transparent 12% 100%),
+    linear-gradient(45deg, transparent 0 78%, rgba(185, 154, 91, 0.12) 78% 100%),
+    var(--paper-soft);
   border-block: 1px solid var(--line);
 }
 
@@ -430,6 +501,36 @@ p {
 
 .ecosystem-map {
   max-width: 900px;
+}
+
+.receive {
+  border-top: 1px solid var(--line);
+}
+
+.receive-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.receive-grid article {
+  min-height: 280px;
+  padding: 26px;
+  background: rgba(255, 253, 247, 0.62);
+}
+
+.receive-grid span {
+  display: inline-block;
+  margin-bottom: 28px;
+  color: var(--brass);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.receive-grid p {
+  margin-top: 14px;
 }
 
 .fit {
@@ -474,7 +575,7 @@ p {
   padding: clamp(80px, 12vw, 150px) 18px;
   background:
     linear-gradient(rgba(17, 20, 23, 0.78), rgba(17, 20, 23, 0.82)),
-    url("assets/tessera-hero-mosaic.svg") center / cover no-repeat;
+    url("assets/tessera-hero-mosaic.jpg") center / cover no-repeat;
   color: var(--ivory);
 }
 
@@ -489,6 +590,13 @@ p {
   margin: 22px auto 0;
   color: rgba(255, 253, 247, 0.82);
   font-size: 1.16rem;
+}
+
+.final-inner .cta-support {
+  max-width: 600px;
+  margin-top: 18px;
+  color: rgba(255, 253, 247, 0.68);
+  font-size: 0.98rem;
 }
 
 @media (max-width: 860px) {
@@ -522,6 +630,7 @@ p {
   .turn-grid,
   .product-layout,
   .fit,
+  .receive-grid,
   .commitment-row,
   .difference-grid {
     grid-template-columns: 1fr;
@@ -532,11 +641,15 @@ p {
   }
 
   .board-visual {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .board-column {
-    min-height: 170px;
+    min-height: 150px;
+  }
+
+  .receive-grid article {
+    min-height: auto;
   }
 }
 
@@ -552,6 +665,10 @@ p {
   .button,
   .hero-actions {
     width: 100%;
+  }
+
+  .board-visual {
+    grid-template-columns: 1fr;
   }
 
   .quote-band p {
