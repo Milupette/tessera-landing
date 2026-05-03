@@ -36,9 +36,12 @@ if (mosaicCanvas) {
 
   const createPieces = (width, height) => {
     const isMobile = width < 520;
-    const columns = isMobile ? 5 : 7;
-    const rows = isMobile ? 4 : 5;
-    const count = columns * rows;
+    const logoColumns = isMobile ? 3 : 4;
+    const logoRows = isMobile ? 3 : 4;
+    const piecesPerLogoPart = logoColumns * logoRows;
+    const count = piecesPerLogoPart * 4;
+    const columns = isMobile ? 6 : 8;
+    const rows = Math.ceil(count / columns);
     const cellWidth = width / (columns + 1.7);
     const cellHeight = height / (rows + 2.2);
     const originX = isMobile ? width * 0.5 : width * 0.58;
@@ -67,14 +70,20 @@ if (mosaicCanvas) {
         drift: random(0.00035, 0.0009),
         phase: random(0, Math.PI * 2),
         shape: index % 4,
-        logoPart: index % 4,
-        logoSlot: Math.floor(index / 4),
+        logoPart: Math.floor(index / piecesPerLogoPart),
+        logoSlot: index % piecesPerLogoPart,
+        logoColumns,
+        logoRows,
       };
     });
   };
 
   const getLogoGeometry = (width, height) => {
-    const logoSize = clamp(Math.min(width, height) * (width < 520 ? 0.34 : 0.38), 132, 286);
+    const logoSize = clamp(
+      Math.min(width, height) * (width < 520 ? 0.54 : 0.52),
+      width < 520 ? 154 : 220,
+      width < 520 ? 260 : 430,
+    );
     const tile = logoSize * 0.46;
     const gap = logoSize * 0.08;
     const centerX = width < 520 ? width * 0.5 : width * 0.6;
@@ -93,50 +102,18 @@ if (mosaicCanvas) {
   const getLogoTarget = (piece, width, height) => {
     const geometry = getLogoGeometry(width, height);
     const center = getLogoPartCenter(piece.logoPart, geometry);
-    const slotsPerPart = Math.ceil(pieces.length / 4);
-    const perRow = Math.ceil(Math.sqrt(slotsPerPart));
-    const cell = geometry.tile / (perRow + 0.3);
-    const row = Math.floor(piece.logoSlot / perRow);
-    const column = piece.logoSlot % perRow;
-    const rowCount = Math.ceil(slotsPerPart / perRow);
-    const jitter = cell * 0.08;
+    const column = piece.logoSlot % piece.logoColumns;
+    const row = Math.floor(piece.logoSlot / piece.logoColumns);
+    const widthPerPiece = geometry.tile / piece.logoColumns;
+    const heightPerPiece = geometry.tile / piece.logoRows;
 
     return {
-      x: center.x + (column - (perRow - 1) / 2) * cell + Math.sin(piece.phase) * jitter,
-      y: center.y + (row - (rowCount - 1) / 2) * cell + Math.cos(piece.phase) * jitter,
-      size: cell * 0.82,
+      x: center.x - geometry.tile / 2 + widthPerPiece * (column + 0.5),
+      y: center.y - geometry.tile / 2 + heightPerPiece * (row + 0.5),
+      width: widthPerPiece,
+      height: heightPerPiece,
+      size: Math.max(widthPerPiece, heightPerPiece),
     };
-  };
-
-  const drawLogoBase = (width, height, progress) => {
-    if (progress <= 0.02) {
-      return;
-    }
-
-    const geometry = getLogoGeometry(width, height);
-    context.save();
-    context.globalAlpha = progress * 0.72;
-
-    logoPalette.forEach((color, part) => {
-      const center = getLogoPartCenter(part, geometry);
-      context.fillStyle = color;
-      context.strokeStyle = "rgba(255, 253, 247, 0.22)";
-      context.lineWidth = 1;
-      context.fillRect(
-        center.x - geometry.tile / 2,
-        center.y - geometry.tile / 2,
-        geometry.tile,
-        geometry.tile,
-      );
-      context.strokeRect(
-        center.x - geometry.tile / 2,
-        center.y - geometry.tile / 2,
-        geometry.tile,
-        geometry.tile,
-      );
-    });
-
-    context.restore();
   };
 
   const drawPiece = (piece, x, y, angle, color = piece.color, alpha = piece.alpha, size = piece.size) => {
@@ -178,6 +155,21 @@ if (mosaicCanvas) {
       context.closePath();
       context.fill();
       context.stroke();
+    }
+
+    context.restore();
+  };
+
+  const drawLogoPiece = (x, y, width, height, color, alpha, seamAlpha) => {
+    context.save();
+    context.globalAlpha = alpha;
+    context.fillStyle = color;
+    context.fillRect(x - width / 2 - 0.45, y - height / 2 - 0.45, width + 0.9, height + 0.9);
+
+    if (seamAlpha > 0.01) {
+      context.strokeStyle = `rgba(255, 253, 247, ${seamAlpha})`;
+      context.lineWidth = 0.7;
+      context.strokeRect(x - width / 2, y - height / 2, width, height);
     }
 
     context.restore();
@@ -245,13 +237,19 @@ if (mosaicCanvas) {
         color: logoProgress > 0.08 ? logoPalette[piece.logoPart] : piece.color,
         alpha: piece.alpha + (0.96 - piece.alpha) * logoProgress,
         size: piece.size + (logoTarget.size - piece.size) * logoProgress,
+        logoWidth: (piece.size * 0.9) + (logoTarget.width - piece.size * 0.9) * logoProgress,
+        logoHeight: (piece.size * 0.72) + (logoTarget.height - piece.size * 0.72) * logoProgress,
+        logoProgress,
       };
     });
 
-    drawLogoBase(width, height, logoProgress);
-    drawConnections(settledPieces, progress * (1 - logoProgress * 0.64));
-    settledPieces.forEach(({ piece, x, y, angle, color, alpha, size }) => {
-      drawPiece(piece, x, y, angle, color, alpha, size);
+    drawConnections(settledPieces, progress * (1 - logoProgress));
+    settledPieces.forEach(({ piece, x, y, angle, color, alpha, size, logoWidth, logoHeight, logoProgress }) => {
+      if (logoProgress > 0.18) {
+        drawLogoPiece(x, y, logoWidth, logoHeight, color, alpha, 0.1 * (1 - logoProgress));
+      } else {
+        drawPiece(piece, x, y, angle, color, alpha, size);
+      }
     });
 
     if (!reduceMotion.matches) {
