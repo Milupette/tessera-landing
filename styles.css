@@ -121,9 +121,8 @@ a {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: url("assets/tessera-hero-mosaic.jpg") center right / cover no-repeat;
-  transform: scale(1.02);
-  transition: filter 900ms ease, opacity 900ms ease, transform 900ms ease;
+  background: url("assets/tessera-hero-mosaic.svg") center right / cover no-repeat;
+  image-rendering: auto;
 }
 
 .hero::before,
@@ -157,7 +156,6 @@ a {
     linear-gradient(var(--clay), var(--clay)) 79% 43% / 16% 20% no-repeat;
   opacity: 0.26;
   transform: rotate(-7deg);
-  filter: blur(0.2px);
 }
 
 .hero-overlay {
@@ -168,26 +166,6 @@ a {
     linear-gradient(90deg, rgba(10, 12, 14, 0.9) 0%, rgba(10, 12, 14, 0.78) 36%, rgba(10, 12, 14, 0.2) 72%),
     linear-gradient(0deg, rgba(10, 12, 14, 0.45), rgba(10, 12, 14, 0.05));
   transition: opacity 900ms ease, background 900ms ease;
-}
-
-.hero.is-logo-formed .hero-media {
-  filter: contrast(1.08) saturate(1.08);
-  opacity: 1;
-  transform: scale(1);
-}
-
-.hero.is-logo-formed .hero-overlay {
-  background:
-    linear-gradient(90deg, rgba(10, 12, 14, 0.84) 0%, rgba(10, 12, 14, 0.68) 34%, rgba(10, 12, 14, 0.08) 72%),
-    linear-gradient(0deg, rgba(10, 12, 14, 0.28), rgba(10, 12, 14, 0.01));
-}
-
-.hero.is-logo-formed::before {
-  opacity: 0.24;
-}
-
-.hero.is-logo-formed::after {
-  opacity: 0.12;
 }
 
 .living-mosaic {
