@@ -1,6 +1,15 @@
 const header = document.querySelector("[data-header]");
 const mosaicCanvas = document.querySelector("[data-living-mosaic]");
 const hero = document.querySelector(".hero");
+const diagnosisDialog = document.querySelector("[data-diagnosis-dialog]");
+const diagnosisOpen = document.querySelector("[data-diagnosis-open]");
+const diagnosisClose = document.querySelector("[data-diagnosis-close]");
+const diagnosisSteps = Array.from(document.querySelectorAll("[data-diagnosis-step]"));
+const diagnosisAnswers = Array.from(document.querySelectorAll("[data-diagnosis-answer]"));
+const diagnosisResult = document.querySelector("[data-diagnosis-result]");
+const diagnosisResultText = document.querySelector("[data-diagnosis-result-text]");
+const diagnosisWhatsapp = document.querySelector("[data-diagnosis-whatsapp]");
+const whatsappLink = document.querySelector("[data-whatsapp-link]");
 
 const updateHeader = () => {
   header.classList.toggle("is-scrolled", window.scrollY > 24);
@@ -20,6 +29,7 @@ if (mosaicCanvas) {
   let startedAt = performance.now();
   let logoMode = false;
   let logoStartedAt = 0;
+  let autoLogoTimer = 0;
 
   const random = (min, max) => Math.random() * (max - min) + min;
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
@@ -280,6 +290,17 @@ if (mosaicCanvas) {
     }
   };
 
+  const scheduleAutoLogo = () => {
+    window.clearTimeout(autoLogoTimer);
+
+    if (reduceMotion.matches) {
+      formLogo();
+      return;
+    }
+
+    autoLogoTimer = window.setTimeout(formLogo, 5600);
+  };
+
   const handleMosaicClick = (event) => {
     const rect = mosaicCanvas.getBoundingClientRect();
     const clickedInsideCanvas =
@@ -300,8 +321,15 @@ if (mosaicCanvas) {
 
   const handleMotionPreference = () => {
     cancelAnimationFrame(frame);
+    window.clearTimeout(autoLogoTimer);
     startedAt = performance.now();
-    renderMosaic(startedAt + 5000);
+
+    if (reduceMotion.matches) {
+      formLogo();
+    } else {
+      renderMosaic(startedAt);
+      scheduleAutoLogo();
+    }
   };
 
   if (typeof reduceMotion.addEventListener === "function") {
@@ -312,4 +340,92 @@ if (mosaicCanvas) {
 
   resizeMosaic();
   renderMosaic(startedAt);
+  scheduleAutoLogo();
+}
+
+if (diagnosisDialog && diagnosisOpen && diagnosisClose) {
+  let currentDiagnosisStep = 0;
+  let diagnosisSelections = [];
+
+  const resetDiagnosis = () => {
+    currentDiagnosisStep = 0;
+    diagnosisSelections = [];
+    diagnosisSteps.forEach((step, index) => {
+      step.classList.toggle("is-active", index === 0);
+    });
+
+    if (diagnosisResult) {
+      diagnosisResult.hidden = true;
+    }
+  };
+
+  const getDiagnosisResult = () => {
+    const scores = diagnosisSelections.reduce((map, item) => {
+      map[item] = (map[item] || 0) + 1;
+      return map;
+    }, {});
+
+    return diagnosisSelections.reduce((best, item) => {
+      if (!best || scores[item] >= scores[best]) {
+        return item;
+      }
+
+      return best;
+    }, "");
+  };
+
+  const showDiagnosisResult = () => {
+    diagnosisSteps.forEach((step) => step.classList.remove("is-active"));
+    const result = getDiagnosisResult() || "clareza de próximos passos";
+
+    if (diagnosisResultText) {
+      diagnosisResultText.textContent = `Seu primeiro ponto de construção: ${result}.`;
+    }
+
+    if (diagnosisWhatsapp && whatsappLink) {
+      diagnosisWhatsapp.href = whatsappLink.href;
+    }
+
+    if (diagnosisResult) {
+      diagnosisResult.hidden = false;
+    }
+  };
+
+  const closeDiagnosis = () => {
+    diagnosisDialog.close();
+  };
+
+  diagnosisOpen.addEventListener("click", () => {
+    resetDiagnosis();
+
+    if (typeof diagnosisDialog.showModal === "function") {
+      diagnosisDialog.showModal();
+    } else {
+      diagnosisDialog.setAttribute("open", "");
+    }
+  });
+
+  diagnosisClose.addEventListener("click", closeDiagnosis);
+
+  diagnosisDialog.addEventListener("click", (event) => {
+    if (event.target === diagnosisDialog) {
+      closeDiagnosis();
+    }
+  });
+
+  diagnosisAnswers.forEach((answer) => {
+    answer.addEventListener("click", () => {
+      diagnosisSelections.push(answer.dataset.result || "");
+      currentDiagnosisStep += 1;
+
+      if (currentDiagnosisStep >= diagnosisSteps.length) {
+        showDiagnosisResult();
+        return;
+      }
+
+      diagnosisSteps.forEach((step, index) => {
+        step.classList.toggle("is-active", index === currentDiagnosisStep);
+      });
+    });
+  });
 }
